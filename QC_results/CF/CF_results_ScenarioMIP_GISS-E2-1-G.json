@@ -1,0 +1,314 @@
+{
+    "header": {
+        "application:": "CF-checker",
+        "institution": "CEDA"
+    },
+    "results": {
+        "hdl:21.14100/d912e28e-0a01-40dc-8811-b183b3eaf20d": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp119.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/6c5a00d3-50e7-482f-9c01-01ce235dc539": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp119.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/2d6403d2-21d9-42b2-b087-3f5132f4aa92": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp126.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/4595da8a-00b0-427e-b66d-1a729c77ee5c": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp126.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/72e1e6f8-c5d1-4285-921f-ab81401252d1": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp126.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/6fc8eae2-b435-4d05-b75a-a9974d2845a4": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp126.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/4d6c4cc8-aea4-4977-ba08-219050146f61": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp126.r1i1p1f2.day.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/89f388d2-4b0b-4fd3-802d-65b25cd68484": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp126.r1i1p3f1.day.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/4cda8be0-42ca-411b-8701-b6f251a8809e": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r10i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/9820ed94-ee33-4809-b397-71a1fbea4416": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r10i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/8056ecb6-aea8-45c1-8763-4dcdedc58365": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/57e54df9-5fcc-44f4-8daf-5eb942ea1bea": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/a0370479-e690-4e51-a8df-a3984acd7212": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/37857674-199e-413f-9dca-82295a59844e": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/ebdd7f12-2b68-4cbe-8e7b-2a835c42a7dd": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r2i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/ae33e19d-67be-4b09-b5dd-151bb755bd1c": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r2i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/f5060005-7577-4df8-9d13-b9806162ae00": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r2i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/b9b7c584-3443-401f-bbe6-61c536f519c2": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r2i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/2dbc84d5-ffa2-4b21-baa3-d81eaa60ccab": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r3i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/3dd12bf8-2f1f-410c-a9d0-8bc057850adb": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r3i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/82f8879c-ada0-422e-a4c3-7e10216473ce": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r3i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/ff95cc36-66cb-41ff-a1eb-b8f2a53d6aa4": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r3i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/e835f99e-f6a3-4949-ad2e-bfb004dfc97e": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r4i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/f2f07679-b80a-4344-a935-5446b0b45fcc": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r4i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/02f7efc9-bf9a-40a6-9369-c4651d04eb22": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r4i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/60146562-0ffa-457f-9f15-9f49ce75dcfd": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r4i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/468bb87c-d507-4357-bab8-b62662b64e34": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r5i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/95372d6d-6843-48b6-abdd-dc99789dfc08": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r5i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/8617eca9-bca8-408a-a5b5-d44286b3e7ac": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r5i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/0e854e67-20de-4bc5-972a-4cc6422ee207": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r5i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/88b4eba2-2f66-4fc0-bbcf-e9d2960fad12": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r6i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/0dc480df-854b-485b-950d-7111eb8334fe": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r6i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/5fd7adc5-9458-4d1b-b402-5c9714f26aa5": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r7i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/6f368189-5649-4bce-9513-dd910bf67ade": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r7i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/1a652131-3788-4079-acb2-f7e2b1c0ad79": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r8i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/d2a98f56-f481-4e76-8291-f01be33397a9": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r8i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/53e5e7c6-3414-43cb-acf4-1c67f264b8af": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r9i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/9578e161-bcda-446f-bb33-b03f1a7b6165": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r9i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/1cc079e1-5638-4308-805f-dee42f32007b": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r1i1p1f2.day.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/df75f7ff-34c8-4f0d-a030-1cdfd974ab6a": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp245.r1i1p3f1.day.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/dab45247-bb68-49db-8f32-7a3424a10170": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp370.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/41b62a1e-2617-4091-b332-8ca886b2f4f3": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp370.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/d8df595a-2d00-4ea3-9bbb-47dadea426ce": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp370.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/afb5ae20-de4d-42c2-84c9-fc20a6665e6d": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp370.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/5fb8efc5-86ed-4e4a-a1fe-df8985d3005b": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp370.r1i1p1f2.day.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/1b80fd1f-0ed5-4b1a-91f3-3b25d0cdd37a": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp370.r1i1p3f1.day.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/289f273e-11e8-4e99-9580-501cf4b564d2": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp585.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/73adc98f-2bcc-44d1-adf6-59dad83c796d": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp585.r1i1p1f2.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/606a60da-c654-4769-bfd8-bc6f41782a34": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp585.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/81f6e801-f86e-4349-8a6e-45279d5bb17f": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp585.r1i1p3f1.Amon.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        },
+        "hdl:21.14100/7cb40649-b9ab-46ec-9277-7ddb694a1356": {
+            "dset_id": "CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp585.r1i1p3f1.day.tas.gn.v20200115",
+            "timestamp": "2020-05-15",
+            "qc_status": "pass",
+            "qc_message": NaN
+        }
+    }
+}
