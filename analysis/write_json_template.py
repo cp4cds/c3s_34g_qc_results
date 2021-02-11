@@ -4,6 +4,7 @@ import os
 import json
 import argparse
 import logging
+from datetime import datetime as dt
 logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.INFO)
 
 def main():
@@ -24,15 +25,17 @@ def main():
     jout["datasets"] = {}
 
     for dsid, files in data.items():
+
         if "piControl" in dsid or "amip" in dsid:
             print(f'skipping ds {dsid}')
             continue
+
         dspid = dataset_pids[dsid]
-        # print(dsid, dspid)
-        json_ds_qc = {'error_severity': '', 'error_message': ''}
+        logging.debug(dsid, dspid)
+        json_ds_qc = {'error_severity': 'na', 'error_message': 'na'}
         ds_qcStatus = ""
 
-        json_files = {}
+        json_files ={}
         for f in files:
             for fpid, fname in f.items():
                 json_files[fpid] = {'filename': fname,
@@ -40,19 +43,18 @@ def main():
                                     'error_severity': '',
                                     'error_message': ''
                                     }
+                logging.debug(fpid, fname)
 
         jout["datasets"][dspid] = {'dset_id': dsid,
                                    'qc_status': ds_qcStatus,
                                    'dataset_qc': json_ds_qc,
                                    'files': json_files
                                    }
-
-    # Output JSON
-    json_obj = json.dumps(jout, indent=4)
-    with open('QC_template.json', "a+") as o:
-        o.write(json_obj)
+        # Output JSON
+        json_obj = json.dumps(jout, indent=4)
+        with open('QC_template.json', "a+") as o:
+            o.write(json_obj)
 
 
 if __name__ == "__main__":
-
     main()
