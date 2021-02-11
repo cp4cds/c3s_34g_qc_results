@@ -6,47 +6,43 @@ import re
 base = '/gws/nopw/j04/cp4cds1_vol3/c3s_34g/c3s_34g_qc_results/'
 ifile = os.path.join(base, 'Catalogs/dataset_ids_release2_no-piControl-amip_202002.txt')
 
-def main():
 
+def set_max(variant, count):
+
+    max_set = {variant: count}
+    max_num = count
+    max_variant = variant
+
+    return max_set, max_num, max_variant
+
+
+def main():
     with open(ifile) as r:
         dss = [line.strip() for line in r]
 
-    uexpts = set()
-    [uexpts.add('.'.join(ds.split('.')[:5])) for ds in dss]
+    uniq_expts = set()
+    [uniq_expts.add('.'.join(ds.split('.')[:5])) for ds in dss]
 
-    uens = set()
-    [uens.add('.'.join(ds.split('.')[:6])) for ds in dss]
-
-    ens_dict = {}
-    for uex in uexpts:
+    variant_dict = {}
+    for u_expt in uniq_expts:
         variants = set()
-        [variants.add(d.split('.')[5]) for d in dss if uex in d]
-        v_list = []
+        [variants.add(d.split('.')[5]) for d in dss if u_expt in d]
+        variant_counts = []
 
-        for v in variants:
+        for v_id in variants:
             ids = set()
-            for ds in dss:
-                if '.'.join([uex, v]) in ds:
-                    ids.add(ds)
+            [ids.add(ds) for ds in dss if '.'.join([u_expt, v_id]) in ds]
+            variant_counts.append({v_id: len(ids)})
+            variant_dict[u_expt] = variant_counts
 
-            v_list.append({v: len(ids)})
-            ens_dict[uex] = v_list
+        for u_ex, v_counts in variant_dict.items():
+            max_set, max_num, max_variant = set_max(list(v_counts[0].keys())[0], 0)
+            for _ in v_counts:
+                max_set, max_num, max_variant = zip(*[set_max(variant, count) for variant, count in _.items()])
+        main_ensemble = '.'.join([u_expt, max_variant])
 
-        for k, v in ens_dict.items():
-            max_num = 0
-            max_set = {}
-            for x in v:
-                for var, num in x.items():
-                  if num > max_num:
-                    max_set[var] = num
-                    max_num = num
-                    max_id = var
-
-        max_ens = '.'.join([uex, max_id])
         dsids = set()
-        for ds in dss:
-            if max_ens in ds:
-                dsids.add(ds)
+        [dsids.add(ds) for ds in dss if main_ensemble in ds]
 
         u_and_v = False
         for ds in dsids:
@@ -54,6 +50,7 @@ def main():
                 for d in dsids:
                     if 'vas' in d:
                         u_and_v = True
+
             if not u_and_v:
                 if 'vas' in ds:
                     for d in dsids:
@@ -61,8 +58,9 @@ def main():
                             u_and_v = True
 
         if not u_and_v:
-            print('mismatch winds ', max_ens)
-    for expt, vars in ens_dict.items():
+            print('mismatch winds ', main_ensemble)
+
+    for expt, vars in variant_dict.items():
         print(expt, vars)
 
 
