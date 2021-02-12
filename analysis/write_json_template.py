@@ -24,7 +24,7 @@ def main():
     jout["results"] = {}
     jout["datasets"] = {}
 
-    for dsid, files in data.items():
+    for dsid, files in list(data.items()):
 
         if "piControl" in dsid or "amip" in dsid:
             print(f'skipping ds {dsid}')
@@ -50,10 +50,10 @@ def main():
                                    'dataset_qc': json_ds_qc,
                                    'files': json_files
                                    }
-        # Output JSON
-        json_obj = json.dumps(jout, indent=4)
-        with open('QC_template.json', "a+") as o:
-            o.write(json_obj)
+    # Output JSON
+    json_obj = json.dumps(jout, indent=4)
+    with open('QC_template.json', "a+") as o:
+        o.write(json_obj)
 
 
 if __name__ == "__main__":
