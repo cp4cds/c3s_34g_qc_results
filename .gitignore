@@ -1,3 +1,4 @@
 # User defined
 *.out
 QC_Results/*json
+Catalogs/*json
