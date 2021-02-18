@@ -6,15 +6,18 @@ import logging
 import datetime as dt
 
 today = dt.datetime.today().isoformat()[:10]
-logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.DEBUG)
 
-QCDIR = '/gws/nopw/j04/cp4cds1_vol3/c3s_34g/cmip6_qc/data/release2-beta/'
+logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.INFO)
+
+
+QCDIR = '../QC_Results/'
+RELEASE_DATASETS_FILE = os.path.join('../Catalogs/', 'dataset-ids-pids_release2_202002_2.csv')
 MISSING_DATASETS = os.path.join(QCDIR, f'missing_ds_{today}.txt')
 FAILED_DATASETS = os.path.join(QCDIR, f'failed_ds_{today}.txt')
 PASSED_DATASETS = os.path.join(QCDIR, f'passed_ds_{today}.txt')
-FILES = [MISSING_DATASETS, FAILED_DATASETS, PASSED_DATASETS]
+LOGFILES = [MISSING_DATASETS, FAILED_DATASETS, PASSED_DATASETS]
 
-for file in FILES:
+for file in LOGFILES:
     if os.path.exists(file):
         os.remove(file)
 
@@ -23,7 +26,13 @@ for file in FILES:
 
 
 def read_qc_log(filename):
-    logging.info(f"Reading file : {filename}")
+    """
+    Read log file
+    :param filename: Valid JSON in correct format
+    :return:
+    """
+
+    logging.info(f"Reading QC file : {filename}")
     if os.path.exists(filename):
         with open(filename) as jsn_file:
             results = json.loads(jsn_file.read())
@@ -33,11 +42,24 @@ def read_qc_log(filename):
 
 
 def write_log(missing_ds, ofile):
+    """
+    Append a dataset to a logfile
+    :param missing_ds: Dataset id
+    :param ofile: logfile
+    :return: 
+    """
+    
     with open(ofile, 'a+') as w:
         w.writelines(f"{missing_ds}\n")
 
 
 def read_dsids_and_pids(ifile):
+    """
+    Read dataset and pid csv file
+    :param ifile: file with valid dataset and pids for release
+    :return: dict[pid] = dataset_id 
+    """
+    
     logging.info(f"Reading file : {ifile}")
     dsids = {}
     with open(ifile, 'r') as r:
@@ -49,17 +71,16 @@ def read_dsids_and_pids(ifile):
 
 def main():
 
-    # Read all datasets for release 1
-    release_datasets_file = '/gws/nopw/j04/cp4cds1_vol3/c3s_34g/cmip6_qc/data/release2-beta/datasets_list_2020-10.csv'
-    ids = read_dsids_and_pids(release_datasets_file)
+    # Read all datasets for release
+    ids = read_dsids_and_pids(RELEASE_DATASETS_FILE)
     pids = list(ids.keys())
 
     # load all logs
     CHECKS = []
-    # cf_results = read_qc_log(os.path.join(QCDIR, 'QC_cfchecker.json'))
-    # if cf_results: CHECKS.append('cf')
-    errata_results = read_qc_log(os.path.join(QCDIR, 'QC_errata.json'))
-    if errata_results: CHECKS.append('errata')
+    cf_results = read_qc_log(os.path.join(QCDIR, 'QC_cfchecker.json'))
+    if cf_results: CHECKS.append('cf')
+    # errata_results = read_qc_log(os.path.join(QCDIR, 'QC_errata.json'))
+    # if errata_results: CHECKS.append('errata')
     # nctime_results = read_qc_log(os.path.join(QCDIR, 'QC_nctime.json'))
     # if nctime_results: CHECKS.append('nctime')
     # prepare_results = read_qc_log(os.path.join(QCDIR, 'QC_prepare.json'))
@@ -71,15 +92,15 @@ def main():
 
     logging.info(f'CHECKS: {CHECKS}')
 
-    for pid in pids[2:3]:
-        logging.info(f"Interogating {pid}")
+    for pid in pids:
+        logging.debug(f"Interogating {pid}")
         missing_datasets = set()
         results_status = {}
 
         for check in CHECKS:
             logging.debug(f'QC CHECK {check}')
             try:
-                print(eval(f"{check}_results")['datasets'][pid])
+                logging.debug(eval(f"{check}_results")['datasets'][pid])
                 results_status[check] = eval(f"{check}_results")['datasets'][pid]
                 logging.debug(f" {results_status[check]}")
 
@@ -98,8 +119,8 @@ def main():
 
             for qc, status in ds_status.items():
                 if not status == 'pass':
-                    info.debug(f'dataset failed {qc, status}')
-                    write_log(ds_status, FAILED_DATASETS)
+                    logging.debug(f'dataset failed {qc, status}')
+                    write_log(f"{pid, ids[pid]}", FAILED_DATASETS)
                     break
                 else:
                     write_log(f"{pid, ids[pid]}", PASSED_DATASETS)
