@@ -1,0 +1,3 @@
+# User defined
+*.out
+QC_Results/*json
