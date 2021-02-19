@@ -1,6 +1,6 @@
 #!/usr/bin/env Python
 
-import os
+import os, sys
 import json
 import logging
 import datetime as dt
@@ -15,14 +15,12 @@ RELEASE_DATASETS_FILE = os.path.join('../Catalogs/', 'dataset-ids-pids_release2_
 MISSING_DATASETS = os.path.join(QCDIR, f'missing_ds_{today}.txt')
 FAILED_DATASETS = os.path.join(QCDIR, f'failed_ds_{today}.txt')
 PASSED_DATASETS = os.path.join(QCDIR, f'passed_ds_{today}.txt')
-LOGFILES = [MISSING_DATASETS, FAILED_DATASETS, PASSED_DATASETS]
+UNKNOWN_DATASETS = os.path.join(QCDIR, f'unknown_ds_{today}.txt')
+LOGFILES = [MISSING_DATASETS, FAILED_DATASETS, PASSED_DATASETS, UNKNOWN_DATASETS]
 
 for file in LOGFILES:
     if os.path.exists(file):
         os.remove(file)
-
-
-# CHECKS = ['cf', 'errata', 'nctime', 'prepare', 'range']
 
 
 def read_qc_log(filename):
@@ -69,61 +67,82 @@ def read_dsids_and_pids(ifile):
     return dsids
 
 
+def get_checks():
+    # load all logs
+    CHECKS = {}
+
+    qc_types = ['cf', 'errata', 'nctime', 'prepare', 'ranges', 'handle']
+    qc_types = ['cf', 'errata', 'handle']
+    qc_types = ['cf', 'handle']
+    qc_types = ['cf']
+    qc_types = ['cf', 'errata', 'nctime', 'handle']
+    for qc in qc_types:
+
+        fname = f'QC_{qc}.json'
+        qc_data = read_qc_log(os.path.join(QCDIR, f'QC_{qc}.json'))
+        if qc:
+            CHECKS[qc] = qc_data
+
+    return CHECKS
+
+
+def check_missing(pid, pids_dict, QC_CHECKS):
+
+    missing = False
+    for check in QC_CHECKS.keys():
+        logging.debug(f'{check}')
+        if not pid in pids_dict[check]:
+            logging.debug(f"MISSING: {check} {pid}")
+            write_log(f"{check, pid, ids[pid]}", MISSING_DATASETS)
+            missing = True
+
+    return missing
+
+
 def main():
 
     # Read all datasets for release
     ids = read_dsids_and_pids(RELEASE_DATASETS_FILE)
     pids = list(ids.keys())
-
-    # load all logs
-    CHECKS = []
-    cf_results = read_qc_log(os.path.join(QCDIR, 'QC_cfchecker.json'))
-    if cf_results: CHECKS.append('cf')
-    # errata_results = read_qc_log(os.path.join(QCDIR, 'QC_errata.json'))
-    # if errata_results: CHECKS.append('errata')
-    # nctime_results = read_qc_log(os.path.join(QCDIR, 'QC_nctime.json'))
-    # if nctime_results: CHECKS.append('nctime')
-    # prepare_results = read_qc_log(os.path.join(QCDIR, 'QC_prepare.json'))
-    # if prepare_results: CHECKS.append('prepare')
-    # range_results = read_qc_log(os.path.join(QCDIR, 'QC_rangecheck.json'))
-    # if range_results: CHECKS.append('ranges')
-    # handle_results = read_qc_log(os.path.join(QCDIR, 'QC_handles.json'))
-    # if handle_results: CHECKS.append('handle')
-
-    logging.info(f'CHECKS: {CHECKS}')
+    QC_CHECKS = get_checks()
+    if len(QC_CHECKS.keys()) < 1:
+        sys.exit()
 
     for pid in pids:
-        logging.debug(f"Interogating {pid}")
-        missing_datasets = set()
-        results_status = {}
+      # test missing pid from file
+      # if pid == 'hdl:21.14100/80538650-b2b2-3ee8-be87-66994c3ce895':
 
-        for check in CHECKS:
-            logging.debug(f'QC CHECK {check}')
-            try:
-                logging.debug(eval(f"{check}_results")['datasets'][pid])
-                results_status[check] = eval(f"{check}_results")['datasets'][pid]
-                logging.debug(f" {results_status[check]}")
+      # test missing qc status
+      # if pid == 'hdl:21.14100/9835ddcb-5e71-3801-a594-bb7191528461':
 
-            except Exception as error:
-                logging.debug(f"Error in PID : {error}")
-                missing_datasets.add(pid)
+        ds_status = {}
+        pids_dict = {}
 
-        if len(missing_datasets) > 0:
-            write_log(f"{pid, ids[pid]}", MISSING_DATASETS)
+        for check, qc_results in QC_CHECKS.items():
+            pids_dict[check] = list(qc_results['datasets'].keys())
 
-        else:
-            ds_status = {}
-            for check in CHECKS:
-                results_status[check] = eval(f"{check}_results")['datasets'][pid]
-                ds_status[check] = results_status[check]['qc_status']
+            # Check for any missing data in results files
+            missing = check_missing(pid, pids_dict, QC_CHECKS)
+            if missing:
+                continue
 
+            logging.debug(f"Interogating {pid}")
+            ds_status[check] = qc_results['datasets'][pid]['qc_status']
+            if not ds_status[check]:
+                ds_status[check] = 'missing'
+
+        if ('fail' in ds_status.values()) or ('missing' in ds_status.values()) or ('unknown' in ds_status.values()):
             for qc, status in ds_status.items():
-                if not status == 'pass':
+                if status == 'fail':
                     logging.debug(f'dataset failed {qc, status}')
-                    write_log(f"{pid, ids[pid]}", FAILED_DATASETS)
-                    break
-                else:
-                    write_log(f"{pid, ids[pid]}", PASSED_DATASETS)
+                    write_log(f"{qc, pid, ids[pid]}", FAILED_DATASETS)
+
+                elif (status == 'missing') or (status == 'unknown'):
+                    logging.debug(f'dataset missing {qc, status}')
+                    write_log(f"{qc, pid, ids[pid]}", UNKNOWN_DATASETS)
+        else:
+            logging.debug(f'dataset passed {pid}')
+            write_log(f"{pid, ids[pid]}", PASSED_DATASETS)
 
 
 if __name__ == "__main__":
