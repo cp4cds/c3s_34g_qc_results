@@ -72,12 +72,9 @@ def get_checks():
     CHECKS = {}
 
     qc_types = ['cf', 'errata', 'nctime', 'prepare', 'ranges', 'handle']
-    qc_types = ['cf', 'errata', 'handle']
-    qc_types = ['cf', 'handle']
-    qc_types = ['cf']
     qc_types = ['cf', 'errata', 'nctime', 'handle']
-    for qc in qc_types:
 
+    for qc in qc_types:
         fname = f'QC_{qc}.json'
         qc_data = read_qc_log(os.path.join(QCDIR, f'QC_{qc}.json'))
         if qc:
@@ -86,14 +83,14 @@ def get_checks():
     return CHECKS
 
 
-def check_missing(pid, pids_dict, QC_CHECKS):
+def check_missing(pid, pids_dict, ids_and_pids, QC_CHECKS):
 
     missing = False
     for check in QC_CHECKS.keys():
         logging.debug(f'{check}')
         if not pid in pids_dict[check]:
             logging.debug(f"MISSING: {check} {pid}")
-            write_log(f"{check, pid, ids[pid]}", MISSING_DATASETS)
+            write_log(f"{check, pid, ids_and_pids[pid]}", MISSING_DATASETS)
             missing = True
 
     return missing
@@ -102,8 +99,8 @@ def check_missing(pid, pids_dict, QC_CHECKS):
 def main():
 
     # Read all datasets for release
-    ids = read_dsids_and_pids(RELEASE_DATASETS_FILE)
-    pids = list(ids.keys())
+    ids_and_pids = read_dsids_and_pids(RELEASE_DATASETS_FILE)
+    pids = list(ids_and_pids.keys())
     QC_CHECKS = get_checks()
     if len(QC_CHECKS.keys()) < 1:
         sys.exit()
@@ -120,9 +117,11 @@ def main():
 
         for check, qc_results in QC_CHECKS.items():
             pids_dict[check] = list(qc_results['datasets'].keys())
+        # [list(qc_results['datasets'].keys()) for check, qc_results in QC_CHECKS.items()]
 
+        for check, qc_results in QC_CHECKS.items():
             # Check for any missing data in results files
-            missing = check_missing(pid, pids_dict, QC_CHECKS)
+            missing = check_missing(pid, pids_dict, ids_and_pids, QC_CHECKS)
             if missing:
                 continue
 
@@ -135,14 +134,14 @@ def main():
             for qc, status in ds_status.items():
                 if status == 'fail':
                     logging.debug(f'dataset failed {qc, status}')
-                    write_log(f"{qc, pid, ids[pid]}", FAILED_DATASETS)
+                    write_log(f"{qc, pid, ids_and_pids[pid]}", FAILED_DATASETS)
 
                 elif (status == 'missing') or (status == 'unknown'):
                     logging.debug(f'dataset missing {qc, status}')
-                    write_log(f"{qc, pid, ids[pid]}", UNKNOWN_DATASETS)
+                    write_log(f"{qc, pid, ids_and_pids[pid]}", UNKNOWN_DATASETS)
         else:
             logging.debug(f'dataset passed {pid}')
-            write_log(f"{pid, ids[pid]}", PASSED_DATASETS)
+            write_log(f"{pid, ids_and_pids[pid]}", PASSED_DATASETS)
 
 
 if __name__ == "__main__":
