@@ -6,17 +6,30 @@ import logging
 import datetime as dt
 
 today = dt.datetime.today().isoformat()[:10]
-
 logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.INFO)
+# qc_types = ['cf', 'errata', 'nctime', 'prepare', 'ranges', 'handle']
 
+qc_run = 'nctime'
+QCDIR = f'../QC_Results/'
 
-QCDIR = '../QC_Results/'
-RELEASE_DATASETS_FILE = os.path.join('../Catalogs/', 'dataset-ids-pids_release2_202002_2.csv')
-MISSING_DATASETS = os.path.join(QCDIR, f'missing_ds_{today}.txt')
-FAILED_DATASETS = os.path.join(QCDIR, f'failed_ds_{today}.txt')
-PASSED_DATASETS = os.path.join(QCDIR, f'passed_ds_{today}.txt')
-UNKNOWN_DATASETS = os.path.join(QCDIR, f'unknown_ds_{today}.txt')
+QC_ODIR = f'../QC_Results/{qc_run}-{today}'
+if not os.path.isdir(QC_ODIR):
+    os.makedirs(QC_ODIR)
+
+if len(os.listdir(QC_ODIR)) > 0:
+    for f in os.listdir(QC_ODIR):
+        fpath = os.path.join(QC_ODIR, f)
+        print(f'removeing {fpath}')
+        os.remove(fpath)
+
+MISSING_DATASETS = os.path.join(QC_ODIR, f'missing.txt')
+FAILED_DATASETS = os.path.join(QC_ODIR, f'failed.txt')
+PASSED_DATASETS = os.path.join(QC_ODIR, f'passed.txt')
+UNKNOWN_DATASETS = os.path.join(QC_ODIR, f'unknown.txt')
 LOGFILES = [MISSING_DATASETS, FAILED_DATASETS, PASSED_DATASETS, UNKNOWN_DATASETS]
+
+
+RELEASE_DATASETS_FILE = os.path.join('../Catalogs/', 'dataset-ids-pids_release2_202002_2.csv')
 
 for file in LOGFILES:
     if os.path.exists(file):
@@ -72,11 +85,11 @@ def get_checks():
     CHECKS = {}
 
     qc_types = ['cf', 'errata', 'nctime', 'prepare', 'ranges', 'handle']
-    qc_types = ['cf', 'errata', 'nctime', 'handle']
+    qc_types = [f'{qc_run}']
 
     for qc in qc_types:
         fname = f'QC_{qc}.json'
-        qc_data = read_qc_log(os.path.join(QCDIR, f'QC_{qc}.json'))
+        qc_data = read_qc_log(os.path.join(QCDIR, fname))
         if qc:
             CHECKS[qc] = qc_data
 
@@ -129,19 +142,35 @@ def main():
             ds_status[check] = qc_results['datasets'][pid]['qc_status']
             if not ds_status[check]:
                 ds_status[check] = 'missing'
+                continue
 
-        if ('fail' in ds_status.values()) or ('missing' in ds_status.values()) or ('unknown' in ds_status.values()):
-            for qc, status in ds_status.items():
-                if status == 'fail':
-                    logging.debug(f'dataset failed {qc, status}')
-                    write_log(f"{qc, pid, ids_and_pids[pid]}", FAILED_DATASETS)
+            #for nctime
+            if (ds_status[check] == 'pass') or (ds_status[check] == 'na'):
+            # for all others
+            # if (ds_status[check] == 'pass') or (ds_status[check] == 'na'):
+                # print(f'passed, logging {PASSED_DATASETS}')
+                write_log(f"{pid, ids_and_pids[pid]}", PASSED_DATASETS)
+            else:
+                # print(f'failed, logging {FAILED_DATASETS}')
+                write_log(f"{pid, ids_and_pids[pid]}", FAILED_DATASETS)
 
-                elif (status == 'missing') or (status == 'unknown'):
-                    logging.debug(f'dataset missing {qc, status}')
-                    write_log(f"{qc, pid, ids_and_pids[pid]}", UNKNOWN_DATASETS)
-        else:
-            logging.debug(f'dataset passed {pid}')
-            write_log(f"{pid, ids_and_pids[pid]}", PASSED_DATASETS)
+        # if ('fail' in ds_status.values()) or ('missing' in ds_status.values()) or ('unknown' in ds_status.values()):
+        #     for qc, status in ds_status.items():
+        #         if status == 'fail':
+        #             logging.debug(f'dataset failed {qc, status}')
+        #             write_log(f"{qc, pid, ids_and_pids[pid]}", FAILED_DATASETS)
+        #
+        #         elif (status == 'missing') or (status == 'unknown'):
+        #             logging.debug(f'dataset missing {qc, status}')
+        #             write_log(f"{qc, pid, ids_and_pids[pid]}", UNKNOWN_DATASETS)
+        #
+        # elif status == 'passed':
+        #     logging.debug(f'dataset passed {pid}')
+        #     write_log(f"{pid, ids_and_pids[pid]}", PASSED_DATASETS)
+        #
+        # else:
+        #     logging.debug(f'dataset passed {pid}')
+        #     write_log(f"{pid, ids_and_pids[pid]}", PASSED_DATASETS)
 
 
 if __name__ == "__main__":

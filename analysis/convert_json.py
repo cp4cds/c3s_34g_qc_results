@@ -9,5 +9,6 @@ with open(ifile) as jsn:
     data = json.load(jsn)
 
 ofile = ifile.replace('.json', '_formated.json')
+new_data = {"datasets": data}
 with open(ofile, 'w+') as jout:
-    json.dump(data, jout, indent=4)
+    json.dump(new_data, jout, indent=4)

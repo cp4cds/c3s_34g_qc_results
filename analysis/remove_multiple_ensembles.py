@@ -8,38 +8,40 @@ import logging
 # SETTINGS
 logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.INFO)
 base = '/gws/nopw/j04/cp4cds1_vol3/c3s_34g/c3s_34g_qc_results/'
-ifile = os.path.join(base, 'Catalogs/dataset_ids_release2_no-piControl-amip_202002.txt')
+ifile = os.path.join(base, 'QC_Results/QC_passed_all_sites.txt')
 
 
-def set_max(variant, count):
-
-    max_set = {variant: count}
-    max_num = count
-    max_variant = variant
-
-    return max_set, max_num, max_variant
+# def set_max(variant, count):
+#
+#     max_set = {variant: count}
+#     max_num = count
+#     max_variant = variant
+#
+#     return max_set, max_num, max_variant
 
 
 def main():
 
     # Input file is a list of CMIP6 dataset ids
-    logging.info(f'Reading file {ifile}')
+    logging.debug(f'Reading file {ifile}')
     with open(ifile) as r:
         dss = [line.strip() for line in r]
 
     # Generate a set of uniq experiments
     uniq_expts = set()
-    [uniq_expts.add('.'.join(ds.split('.')[:5])) for ds in dss]
-    logging.info(f'Number of uniq experiments {len(uniq_expts)}')
+    [uniq_expts.add('.'.join(ds.split('.')[:5]).strip("'")) for ds in dss]
+    logging.debug(f'Number of uniq experiments {len(uniq_expts)}')
 
     variant_dict = {}
     for u_expt in list(uniq_expts):
-      if u_expt == 'CMIP6.ScenarioMIP.MOHC.UKESM1-0-LL.ssp119':
-        logging.info(f'Unique experiment {u_expt}')
+      # # TEST for winds uniq experiment:
+      # if u_expt == 'CMIP6.ScenarioMIP.CCCma.CanESM5-CanOE.ssp245':
+
+        logging.debug(f'Unique experiment {u_expt}')
 
         # For each unique experiment generate a set of unique variant ids
         variants = set()
-        [variants.add(d.split('.')[5]) for d in dss if u_expt in d]
+        [variants.add(d.split('.')[5].strip("'")) for d in dss if u_expt in d]
 
         variant_counts = []
         for v_id in variants:
@@ -51,73 +53,78 @@ def main():
             [ids.add(ds) for ds in dss if '.'.join([u_expt, v_id]) in ds]
             variant_counts.append({v_id: len(ids)})
             variant_dict[u_expt] = variant_counts
-        logging.info(f'Variants dictionary {variant_dict}')
+
+        logging.debug(f'Variants dictionary {variant_dict}')
 
         # For each unique expt-variant determine the ensemble member that has the greatest number of datasets
-        for u_ex, v_counts in variant_dict.items():
-            max_set, max_num, max_variant = set_max(list(v_counts[0].keys())[0], 0)
-            for _ in v_counts:
-                max_set, max_num, max_variant = zip(*[set_max(variant, count) for variant, count in _.items()])
+        max_num = 0
+        max_variant = False
+        for exp_id, variant_dict_list in variant_dict.items():
+            for v_dict in variant_dict_list:
+                for variant, variant_count in v_dict.items():
+                    if variant_count > max_num:
+                        max_variant = variant
 
-        main_ensemble = '.'.join([u_expt, list(max_variant)[0]])
-        logging.info(f'{main_ensemble}')
+        main_ensemble = '.'.join([u_expt, max_variant])
+
+        logging.debug(f'{main_ensemble}')
 
         dsids = set()
-        [dsids.add(ds) for ds in dss if main_ensemble in ds]
+        [dsids.add(ds.strip("'")) for ds in dss if main_ensemble in ds]
         [logging.debug(d) for d in dsids]
+        logging.debug(f'LEN dataset ids {len(dsids)}')
 
-        logging.info('MAIN ENSEMBLE DEFINED')
-        amon_uas = '.'.join([main_ensemble, 'Amon', 'uas.'])
-        amon_vas = '.'.join([main_ensemble, 'Amon', 'vas.'])
-        logging.debug(amon_uas)
-        logging.debug(amon_vas)
+        logging.debug(f'Datasets defined for main ensemble {len(dsids)}')
 
-        for _ in dsids:
-            if re.search(amon_uas, _):
-                print(f'uas present in dataset')
+        ds_to_remove = resovle_wind_inconsisencies(dsids, main_ensemble)
+        for _ in ds_to_remove:
+            with open(os.path.join(base, 'QC_Results', 'inconsistent_winds_datasets.txt'), 'a+') as w:
+                w.writelines(f'{_}\n')
+            dsids.remove(_)
+            logging.debug(f'REMOVED INCONSISENT WIND {_}')
+        logging.debug(f'LEN datasets {len(dsids)}')
 
-        new_ds = set()
-        for ds in dsids:
-            if amon_uas in ds:
-                print(f'skipping uas')
-            else:
-                new_ds.add(ds)
-
-        dsids = new_ds
-        for _ in dsids:
-            if re.search(amon_uas, _):
-                print(f'uas still present :(')
-        print('uas removed from ds')
+        with open(os.path.join(base, 'QC_Results', 'QC_passed_consistent_datasets.txt'), 'a+') as wh:
+            for valid_dataset in dsids:
+                wh.writelines(f'{valid_dataset}\n')
 
 
-        # dsids_passed = deepcopy(dsids)
+def resovle_wind_inconsisencies(dsids, main_ensemble):
 
-        amon_uas_present = False
-        amon_vas_present = False
-        print(amon_uas_present, amon_vas_present)
-        for _ in dsids:
-            if re.search(amon_uas, _):
-                amon_uas_present = True
-            if re.search(amon_vas, _):
-                amon_vas_present = True
-        print(amon_uas_present, amon_vas_present)
+    wind_components = ['uas.', 'vas.', 'ua.', 'va.']
+    winds = {}
+    for component in wind_components:
+        winds[component.strip('.')] = '.'.join([main_ensemble, 'Amon', component]).strip("'")
+    logging.debug(f'winds dict: {winds}')
 
-        if (amon_uas_present and not amon_vas_present) or (amon_vas_present and not amon_uas_present):
-            # dsids_passed.remove(ds)
-            print('mismatch winds ', main_ensemble)
-        else:
-            print('surface winds ok')
+    amon_uas_present, amon_vas_present, amon_ua_present, amon_va_present = False, False, False, False
 
-        # if ('ua.' in dsids and 'va.' not in dsids) or ('va.' in dsids and 'ua.' not in dsids):
-        #     # dsids_passed.remove(ds)
-        #     print('mismatch winds ', main_ensemble)
-        # else:
-        #     print('Pressure level winds ok')
+    for _ in dsids:
+        # _search = re.compile(r'(%s)\.'%winds[uas])
+        if re.match(winds['uas'] + 'g', _):
+            amon_uas_present = True
+        if re.match(winds['vas'] + 'g', _):
+            amon_vas_present = True
+        if re.match(winds['ua'] + 'g', _):
+            amon_ua_present = True
+        if re.match(winds['va'] + 'g', _):
+            amon_va_present = True
 
+    to_remove = []
 
-    #
-    # for expt, vars in variant_dict.items():
-    #     print(expt, vars)
+    if amon_uas_present and not amon_vas_present:
+        [to_remove.append(_) for _ in dsids if re.match(winds['uas'] + 'g', _)]
+
+    if amon_vas_present and not amon_uas_present:
+        [to_remove.append(_) for _ in dsids if re.match(winds['vas'] + 'g', _)]
+
+    if amon_ua_present and not amon_va_present:
+        [to_remove.append(_) for _ in dsids if re.match(winds['ua'] + 'g', _)]
+
+    if amon_va_present and not amon_ua_present:
+        [to_remove.append(_) for _ in dsids if re.match(winds['va'] + 'g', _)]
+
+    return to_remove
 
 
 if __name__ == "__main__":
