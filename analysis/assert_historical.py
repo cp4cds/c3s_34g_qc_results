@@ -30,7 +30,7 @@ def main():
 
     # Generate a set of uniq experiments
     uniq_models = set()
-    [uniq_models.add('.'.join(ds.split('.')[2:4]).strip("'")) for ds in dss]
+    [uniq_models.add('.'.join(ds.split('.')[2:4]).strip("'")+'.') for ds in dss]
     logging.debug(f'Number of uniq models {len(uniq_models)}')
 
     expts_dict = {}
