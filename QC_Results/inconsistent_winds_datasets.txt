@@ -1,0 +1,7 @@
+CMIP6.ScenarioMIP.CCCma.CanESM5-CanOE.ssp245.r1i1p2f1.Amon.uas.gn.v20190429
+CMIP6.CMIP.NIMS-KMA.UKESM1-0-LL.historical.r13i1p1f2.Amon.vas.gn.v20200205
+CMIP6.ScenarioMIP.NASA-GISS.GISS-E2-1-G.ssp370.r1i1p1f2.Amon.vas.gn.v20200115
+CMIP6.CMIP.EC-Earth-Consortium.EC-Earth3-AerChem.historical.r1i1p1f1.Amon.uas.gr.v20200624
+CMIP6.CMIP.CAS.FGOALS-f3-L.historical.r1i1p1f1.Amon.vas.gr.v20190927
+CMIP6.ScenarioMIP.CCCma.CanESM5-CanOE.ssp585.r1i1p2f1.Amon.uas.gn.v20190429
+CMIP6.ScenarioMIP.MOHC.HadGEM3-GC31-LL.ssp585.r1i1p1f3.Amon.uas.gn.v20200114
