@@ -1,4 +1,9 @@
 # User defined
+analysis/*txt
+analysis/*csv
+analysis/*out
+analysis/*json
+*.bk
 *.out
 QC_Results/*json
 Catalogs/*json
