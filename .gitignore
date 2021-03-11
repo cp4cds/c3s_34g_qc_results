@@ -1,0 +1,6 @@
+analysis/*txt
+analysis/*csv
+analysis/*out
+analysis/*json
+*.bk
+*.out
