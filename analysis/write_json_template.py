@@ -6,18 +6,36 @@ import argparse
 import logging
 from datetime import datetime as dt
 
-FILENAME_CACHE = '../Catalogs/fnames_for_json_template.json'
-RELEASE_IDS_AND_PIDS = '../Catalogs/dataset-ids-pids_release2_202002_2.csv'
-OFILE = 'test-template.json'
+# FILENAME_CACHE = '../Catalogs/fnames_for_json_template.json'
+# RELEASE_IDS_AND_PIDS = '../Catalogs/dataset-ids-pids_release2_202002_2.csv'
+# OFILE = 'test-template.json'
 
 
-def setup():
+def arg_parse_all():
+    """
+    Parses arguments given at the command line
+    :return: Namespace object built from attributes parsed from command line.
+    """
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-f', '--filenames', type=str,
+                        help=f"JSON file with cache of dataset ids as keys and values of filename: file_pids as entries")
+    parser.add_argument('-d', '--datasets', type=str,
+                        help=f"CSV file of dataset ids and pids")
+    parser.add_argument('-o', '--ofile', type=str,
+                        help=f"Template output file")
+
+    return parser.parse_args()
+
+
+def setup(OFILE):
     logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.INFO)
     if os.path.exists(OFILE):
         os.remove(OFILE)
 
 
-def main():
+def main(FILENAME_CACHE, RELEASE_IDS_AND_PIDS, OFILE):
     # Read in data
     with open(FILENAME_CACHE) as jsn:
         data = json.load(jsn)
@@ -68,5 +86,7 @@ def main():
 
 
 if __name__ == "__main__":
-    setup()
-    main()
+    args = arg_parse_all()
+    print(args)
+    setup(args.ofile)
+    main(args.filenames, args.datasets, args.ofile)

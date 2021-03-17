@@ -1,6 +1,6 @@
 #!/usr/bin/env Python
 
-import os
+import os, sys
 import logging
 import requests
 import json
@@ -8,8 +8,9 @@ import json
 logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.INFO)
 
 
-DATASET_IDS_FILE = '../Catalogs/dataset-ids-pids_release2_202002_2.csv'
+DATASET_IDS_FILE = sys.argv[1]
 DATANODE = 'esgf-data.dkrz.de'
+FILEOUT = sys.argv[2]#'fnames_for_json_template.json'
 
 def main():
 
@@ -40,7 +41,7 @@ def main():
 
         fname_dict[id] = fnames
 
-    with open('fnames_for_json_template.json', 'w+') as jout:
+    with open(FILEOUT, 'w+') as jout:
         json.dump(fname_dict, jout, indent=4)
 
 
