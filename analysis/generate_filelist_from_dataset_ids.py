@@ -9,7 +9,8 @@ logging.basicConfig(format='[%(levelname)s]:%(message)s', level=logging.INFO)
 
 
 DATASET_IDS_FILE = sys.argv[1]
-DATANODE = 'esgf-data.dkrz.de'
+# DATANODE = 'esgf-data.dkrz.de'
+DATANODE = "esgf-index1.ceda.ac.uk"
 FILEOUT = sys.argv[2]#'fnames_for_json_template.json'
 
 def main():
