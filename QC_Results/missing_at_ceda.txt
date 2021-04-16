@@ -1,0 +1,7 @@
+CMIP6.CMIP.NIMS-KMA.KACE-1-0-G.historical.r1i1p1f1.SImon.sitemptop.gr.v20200130
+CMIP6.CMIP.NCAR.CESM2-WACCM.historical.r1i1p1f1.Ofx.deptho.gn.v20190227
+CMIP6.CMIP.SNU.SAM0-UNICON.historical.r1i1p1f1.day.tas.gn.v20190323
+CMIP6.ScenarioMIP.NIMS-KMA.KACE-1-0-G.ssp585.r1i1p1f1.SImon.sitemptop.gr.v20200130
+CMIP6.CMIP.NCAR.CESM2-WACCM.historical.r1i1p1f1.Ofx.areacello.gn.v20190227
+CMIP6.ScenarioMIP.EC-Earth-Consortium.EC-Earth3.ssp585.r1i1p1f1.Amon.ta.gr.v20200310
+CMIP6.ScenarioMIP.EC-Earth-Consortium.EC-Earth3.ssp585.r1i1p1f1.Amon.va.gr.v20200310
