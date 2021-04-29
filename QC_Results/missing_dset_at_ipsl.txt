@@ -1,0 +1,6 @@
+CMIP6.CMIP.EC-Earth-Consortium.EC-Earth3-Veg.historical.r12i1p1f1.Ofx.basin.gr.v20200925
+CMIP6.ScenarioMIP.EC-Earth-Consortium.EC-Earth3.ssp126.r6i1p1f1.Ofx.basin.gn.v20200201
+CMIP6.ScenarioMIP.EC-Earth-Consortium.EC-Earth3.ssp370.r6i1p1f1.Ofx.basin.gn.v20200201
+CMIP6.ScenarioMIP.EC-Earth-Consortium.EC-Earth3-Veg.ssp126.r12i1p1f1.Ofx.basin.gn.v20200925
+CMIP6.ScenarioMIP.EC-Earth-Consortium.EC-Earth3-Veg.ssp370.r12i1p1f1.Ofx.basin.gn.v20200925
+CMIP6.ScenarioMIP.NCAR.CESM2-WACCM.ssp126.r1i1p1f1.Amon.hur.gn.v20190815
