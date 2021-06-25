@@ -1,0 +1,43 @@
+        "hdl:21.14100/f0fb8103-d6f6-3f68-905d-422ea077169c": {
+            "dset_id": "CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gr1.v20181206",
+            "dset_qc_status": "fail",
+            "dset_error_severity": "",
+            "dset_error_message": "",
+            "files": {
+                "hdl:21.14100/74ad1b1d-8ec9-4010-b51a-86f16025016c": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gn_185001-201412.nc",
+                    "file_qc_status": "",
+                    "file_error_severity": "",
+                    "file_error_message": ""
+                },
+                "hdl:21.14100/25785211-b12e-4698-9ed3-4aa225268823": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gr1_185001-201412.nc",
+                    "file_qc_status": "pass",
+                    "file_error_severity": "pass",
+                    "file_error_message": "nan"
+                }
+            }
+        },
+
+
+       "hdl:21.14100/58f56c04-e6fb-305f-8b52-891b2e0d16be": {
+            "dset_id": "CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gn.v20181206",
+            "dset_qc_status": "fail",
+            "dset_error_severity": "",
+            "dset_error_message": "",
+            "files": {
+                "hdl:21.14100/74ad1b1d-8ec9-4010-b51a-86f16025016c": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gn_185001-201412.nc",
+                    "file_qc_status": "pass",
+                    "file_error_severity": "pass",
+                    "file_error_message": "nan"
+                },
+                "hdl:21.14100/25785211-b12e-4698-9ed3-4aa225268823": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gr1_185001-201412.nc",
+                    "file_qc_status": "",
+                    "file_error_severity": "",
+                    "file_error_message": ""
+                }
+            }
+        },
+

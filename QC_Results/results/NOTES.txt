@@ -1,0 +1,121 @@
+CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gr1.v20181206"# Identified errors
+
+## CF checker errors
+
+```
+        "hdl:21.14100/f0fb8103-d6f6-3f68-905d-422ea077169c": {
+            "dset_id": "CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gr1.v20181206",
+            "dset_qc_status": "fail",
+            "dset_error_severity": "",
+            "dset_error_message": "",
+            "files": {
+                "hdl:21.14100/74ad1b1d-8ec9-4010-b51a-86f16025016c": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gn_185001-201412.nc",
+                    "file_qc_status": "",
+                    "file_error_severity": "",
+                    "file_error_message": ""
+                },
+                "hdl:21.14100/25785211-b12e-4698-9ed3-4aa225268823": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gr1_185001-201412.nc",
+                    "file_qc_status": "pass",
+                    "file_error_severity": "pass",
+                    "file_error_message": "nan"
+                }
+            }
+        },
+
+
+       "hdl:21.14100/58f56c04-e6fb-305f-8b52-891b2e0d16be": {
+            "dset_id": "CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gn.v20181206",
+            "dset_qc_status": "fail",
+            "dset_error_severity": "",
+            "dset_error_message": "",
+            "files": {
+                "hdl:21.14100/74ad1b1d-8ec9-4010-b51a-86f16025016c": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gn_185001-201412.nc",
+                    "file_qc_status": "pass",
+                    "file_error_severity": "pass",
+                    "file_error_message": "nan"
+                },
+                "hdl:21.14100/25785211-b12e-4698-9ed3-4aa225268823": {
+                    "filename": "tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gr1_185001-201412.nc",
+                    "file_qc_status": "",
+                    "file_error_severity": "",
+                    "file_error_message": ""
+                }
+            }
+        },
+
+```
+
+There are two datasets here that have been merged in the QC results. 
+
+I have checked the URLs for the handle service, and the files on disk and the real situation is:
+
+CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gn.v20181206 (grid=gn):
+ handle: hdl:21.14100/58f56c04-e6fb-305f-8b52-891b2e0d16be
+ files (1):  tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gn_185001-201412.nc (hdl:21.14100/74ad1b1d-8ec9-4010-b51a-86f16025016c)
+
+CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gr1.v20181206 (grid=gr1):
+ handle: hdl:21.14100/f0fb8103-d6f6-3f68-905d-422ea077169c
+ files (1):  tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gr1_185001-201412.nc (hdl:21.14100/25785211-b12e-4698-9ed3-4aa225268823)
+
+NOTE: Handle lookups here:
+ https://handle-esgf.dkrz.de/lp/21.14100/58f56c04-e6fb-305f-8b52-891b2e0d16be
+ https://handle-esgf.dkrz.de/lp/21.14100/f0fb8103-d6f6-3f68-905d-422ea077169c
+
+BUT: BOTH ARE EXCLUDED FROM THE LATEST RELEASE (release 3):
+
+```
+$ grep CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gn.v20181206 MISSING_IN_R3.txt
+CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gn.v20181206
+$ grep CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gr1.v20181206 MISSING_IN_R3.txt
+CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gr1.v20181206
+```
+
+Write some code to check the grid in the dset_id matches the grid in the file names and see
+how many are affected:
+
+```
+$ python3 check_mixed_grids.py | more
+Checking file: QC_cfchecker.json
+MISMATCH: CMIP6.ScenarioMIP.NOAA-GFDL.GFDL-CM4.ssp585.r1i1p1f1.fx.orog.gr1.v20180701 :: orog_fx_GFDL-CM4_ssp585_r1i1p1f1_gr2.nc :: gr1 != gr2
+MISMATCH: CMIP6.ScenarioMIP.NOAA-GFDL.GFDL-ESM4.ssp585.r1i1p1f1.fx.orog.gn.v20180701 :: orog_fx_GFDL-ESM4_ssp585_r1i1p1f1_gr1.nc :: gn != gr1
+MISMATCH: CMIP6.ScenarioMIP.MRI.MRI-ESM2-0.ssp460.r1i1p1f1.Omon.sos.gr.v20200120 :: sos_Omon_MRI-ESM2-0_ssp460_r1i1p1f1_gn_201501-210012.nc :: gr != gn
+MISMATCH: CMIP6.CMIP.NOAA-GFDL.GFDL-ESM4.historical.r1i1p1f1.SImon.sithick.gn.v20190726 :: sithick_SImon_GFDL-ESM4_historical_r1i1p1f1_gr_185001-194912.nc :: gn != gr
+MISMATCH: CMIP6.CMIP.NOAA-GFDL.GFDL-ESM4.historical.r1i1p1f1.SImon.sithick.gn.v20190726 :: sithick_SImon_GFDL-ESM4_historical_r1i1p1f1_gr_195001-201412.nc :: gn != gr
+MISMATCH: CMIP6.ScenarioMIP.NOAA-GFDL.GFDL-ESM4.ssp370.r1i1p1f1.SImon.siconc.gn.v20180701 :: siconc_SImon_GFDL-ESM4_ssp370_r1i1p1f1_gr_201501-210012.nc :: gn != gr
+MISMATCH: CMIP6.CMIP.CNRM-CERFACS.CNRM-ESM2-1.historical.r1i1p1f2.Omon.tos.gr1.v20181206 :: tos_Omon_CNRM-ESM2-1_historical_r1i1p1f2_gn_185001-201412.nc :: gr1 != gn
+MISMATCH: CMIP6.ScenarioMIP.MIROC.MIROC-ES2L.ssp245.r1i1p1f2.SImon.sithick.gr1.v20200731 :: sithick_SImon_MIROC-ES2L_ssp245_r1i1p1f2_gn_201501-210012.nc :: gr1 != gn
+...
+MISMATCH: CMIP6.ScenarioMIP.MIROC.MIROC-ES2L.ssp370.r1i1p1f2.Omon.sos.gn.v20190823 :: sos_Omon_MIROC-ES2L_ssp370_r1i1p1f2_gr1_201501-210012.nc :: gn != gr1
+MISMATCH: CMIP6.CMIP.NOAA-GFDL.GFDL-CM4.historical.r1i1p1f1.SImon.simass.gr.v20180701 :: simass_SImon_GFDL-CM4_historical_r1i1p1f1_gn_185001-194912.nc :: gr != gn
+MISMATCH: CMIP6.CMIP.NOAA-GFDL.GFDL-CM4.historical.r1i1p1f1.SImon.simass.gr.v20180701 :: simass_SImon_GFDL-CM4_historical_r1i1p1f1_gn_195001-201412.nc :: gr != gn
+MISMATCH: CMIP6.ScenarioMIP.NCAR.CESM2-WACCM.ssp126.r1i1p1f1.Omon.sos.gr.v20190815 :: sos_Omon_CESM2-WACCM_ssp126_r1i1p1f1_gn_201501-210012.nc :: gr != gn
+MISMATCH: CMIP6.ScenarioMIP.NCAR.CESM2-WACCM.ssp126.r1i1p1f1.Omon.sos.gr.v20190815 :: sos_Omon_CESM2-WACCM_ssp126_r1i1p1f1_gn_225101-229912.nc :: gr != gn
+MISMATCH: CMIP6.ScenarioMIP.MIROC.MIROC-ES2L.ssp370.r1i1p1f2.Omon.tos.gn.v20190823 :: tos_Omon_MIROC-ES2L_ssp370_r1i1p1f2_gr1_201501-210012.nc :: gn != gr1
+MISMATCH: CMIP6.ScenarioMIP.NOAA-GFDL.GFDL-CM4.ssp245.r1i1p1f1.fx.areacella.gr1.v20180701 :: areacella_fx_GFDL-CM4_ssp245_r1i1p1f1_gr2.nc :: gr1 != gr2
+MISMATCH: CMIP6.ScenarioMIP.NCAR.CESM2-WACCM.ssp126.r1i1p1f1.Ofx.areacello.gr.v20190815 :: areacello_Ofx_CESM2-WACCM_ssp126_r1i1p1f1_gn.nc :: gr != gn
+MISMATCH: CMIP6.ScenarioMIP.NOAA-GFDL.GFDL-ESM4.ssp585.r1i1p1f1.SImon.sithick.gr.v20180701 :: sithick_SImon_GFDL-ESM4_ssp585_r1i1p1f1_gn_201501-210012.nc :: gr != gn
+
+
+RESULTS:
+        Found in 438 datasets.
+        JSON content incorrect for 0 datasets.
+```
+
+Now check how many of these have been rejected in the UNRESOLVED list:
+
+```
+$ for ds in $(python3 check_mixed_grids.py | grep MISMATCH | cut -d' ' -f2 | sort -u) ; do grep "${ds}" MISSING_IN_R3.txt >> NEED_RETESTING_IN_CF.txt ; done
+$ wc -l NEED_RETESTING_IN_CF.txt
+67 NEED_RETESTING_IN_CF.txt
+```
+
+Maybe the old code was not differentiating between grids.
+
+NOTE: in esgf-search, you need to use these labels for:
+ - grid: use "grid_id"
+ - ensemble: use "variant"
+
+
