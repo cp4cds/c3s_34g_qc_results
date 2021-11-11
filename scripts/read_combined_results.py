@@ -29,11 +29,13 @@ def truncate(arr, length):
 def analyse(df, release):
     """
     Read results and provide some annotated outputs to stdout.
+    Returns a new DataFrame of only the data that we want to publish
+    in this release.
     """
     initial_count = len(df)
     print(f"[INFO] Number of datasets: {initial_count}")
 
-    exclude_count = 0
+    dsids_to_exclude = []
 
     for qc_type in qc_types:
         print(f"\n[INFO] Working on: {qc_type}")
@@ -57,11 +59,25 @@ def analyse(df, release):
 
             else:
                 print(f"[ERROR] {unaccounted_for} of {initial_count} failed.") 
-                exclude_count += unaccounted_for
+                dsids_to_exclude.extend(sorted(bad["dset_id"].unique()))
 
-    final_count = initial_count - exclude_count
+    exclude_count = len(dsids_to_exclude)
+    final_count = initial_count - exclude_count 
     print("\n[INFO] Final results.")
     print(f"- initial count: {initial_count}\n- excluded:        {exclude_count}\n- final count:   {final_count}\n")
+
+    return df[~df["dset_id"].isin(dsids_to_exclude)]
+
+
+def write_final_file(df, release):
+    "Writes filtered release file."
+    final_file = f"releases/{release}/final/{release}_final.txt"
+    dset_ids = sorted(df.dset_id)
+
+    with open(final_file, "w") as writer: 
+        writer.write("\n".join(dset_ids) + "\n")
+
+    print(f"[INFO] Wrote: {final_file}")
 
 
 def main():
@@ -69,8 +85,9 @@ def main():
     csv_file = f"releases/{release}/combined/combined_results.csv.gz"
 
     df = pd.read_csv(csv_file)
+    df_filtered = analyse(df, release)
 
-    analyse(df, release)
+    write_final_file(df_filtered, release)
     return df
 
 
