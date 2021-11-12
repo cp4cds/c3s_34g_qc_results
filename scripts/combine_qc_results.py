@@ -12,11 +12,16 @@ import json
 import glob
 import gzip
 import tarfile
+import zipfile
+
 from functools import reduce
 
 qc_types = ['cfchecker', 'errata', 'nctime', 'prepare', 'ranges']
 
-EXPECTED_DS_COUNT = 14570
+EXPECTED_DS_COUNTS = {
+    "r3": 13794,
+    "r4": 14570
+}
 
 
 def load_file(filepath, qc_type):
@@ -25,10 +30,10 @@ def load_file(filepath, qc_type):
     Return the data as a dictionary (from the JSON content).
     """
 
-    # unzip
+    # gunzip
     if filepath.endswith('json.gz'):
-        with gzip.open(filepath,'rt') as zipfile:
-            data = json.load(zipfile)
+        with gzip.open(filepath,'rt') as gzipfile:
+            data = json.load(gzipfile)
 
     # untar
     elif filepath.endswith('tgz') or filepath.endswith('tar.gz'):
@@ -43,6 +48,15 @@ def load_file(filepath, qc_type):
             data = json.load(reader)
 
         os.remove(json_file)
+
+    # unzip
+    elif filepath.endswith("zip"):
+        with zipfile.ZipFile(filepath, 'r') as z:
+            filename = z.namelist()[0]
+
+            with z.open(filename) as reader:
+                content = reader.read()
+                data = json.loads(content)
 
     else:
         with open(filepath) as reader:
@@ -102,9 +116,11 @@ def main():
         rename_qc_fields(df, qc_type)
         print(f"[INFO] Columns are now: {list(df.columns)}")
 
-        if not len(df.dset_id.unique()) == EXPECTED_DS_COUNT:
+        exp_count = EXPECTED_DS_COUNTS[release]
+
+        if not len(df.dset_id.unique()) == exp_count:
             raise ValueError(f"{qc_type} does not have expected ds count: "
-                             f"{len(df_renamed.dset_id.unique())} != {EXPECTED_DS_COUNT}")
+                             f"{len(df.dset_id.unique())} != {exp_count}")
 
         data_frames.append(df)
 
